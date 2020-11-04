@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package order.service.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/any.proto";
+
+option go_package = "api/order/service/v1;v1";
+
+service OrderService {
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderReply) {}
+}
+
+message CreateOrderRequest {
+  uint64 restaurantId = 1;
+  uint64 consumerId = 2;
+  repeated LineItem lineItems = 3;
+  Address deliveryAddress = 4;
+  google.protobuf.Timestamp deliveryTime = 5;
+}
+
+message LineItem {
+  string menuItemId = 1;
+  int32 quantity = 2;
+}
+
+message Address {
+  string street = 1;
+  string city = 2;
+  string state = 3;
+  string zip = 4;
+}
+
+message CreateOrderReply {
+  int64 orderId = 1;
+}
